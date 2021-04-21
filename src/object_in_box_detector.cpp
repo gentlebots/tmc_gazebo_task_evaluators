@@ -203,7 +203,7 @@ int main(int argc, char **argv)
             }
             if (target_objects.find(name) != target_objects.end()) {
                 model_state.request.model_name = name;
-                model_state.request.relative_entity_name = box_name;
+                //model_state.request.relative_entity_name = box_name;
                 getModelState.call(model_state);
                 object_pose[name] = model_state.response.pose;
             }
