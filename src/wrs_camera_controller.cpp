@@ -115,11 +115,18 @@ int main(int argc, char **argv)
     ros::NodeHandle n("~");
 
     ros::Rate rate(1);
+    std::string target_model_name;
 
+    if (n.getParam("target_model_name", target_model_name)) {
+        ROS_INFO("target_model_name is defined as: %s", target_model_name.c_str());
+    } else {
+        ROS_ERROR("Failed to get param 'target_model_name' use default 'hsrb'");
+        target_model_name = "hsrb";
+    }
     ros::service::waitForService("/gazebo/get_model_state");
     ros::ServiceClient getModelState = n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
     gazebo_msgs::GetModelState model_state;
-    model_state.request.model_name = "hsrb";
+    model_state.request.model_name = target_model_name;
 
     // subscription to contacts info on gazebo transport
     gazebo::client::setup(argc, argv);
